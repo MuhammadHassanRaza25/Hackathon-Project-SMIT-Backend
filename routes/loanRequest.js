@@ -3,7 +3,7 @@ import sendResponse from "../helpers/sendResponse.js";
 import LoanRequest from "../models/LoanRequest.js";
 import Users from "../models/Users.js";
 import Appointment from "../models/Appointment.js";
-import nodemailer from "nodemailer"; // Import nodemailer
+import nodemailer from "nodemailer";
 
 const router = express.Router();
 
@@ -12,15 +12,14 @@ const transporter = nodemailer.createTransport({
   service: 'gmail',
   host: 'smtp.gmail.com',
   auth: {
-    user: "unnamed9080@gmail.com", // Sender email
-    pass: "wrua ycat nydk ipjg" // Security-generated password
+    user: "hassanejaz773@gmail.com", 
+    pass: "developer123456",
   }
 });
 
-// Send email function
 const sendEmail = async (to, subject, text) => {
   const mailOptions = {
-    from: `<unnamed9080@gmail.com>`, // Sender email
+    from: `<hassanejaz773@gmail.com>`,
     to, // Receiver email
     subject, // Subject
     text // Email body
@@ -69,7 +68,7 @@ router.post("/addLoanRequest", async (req, res) => {
 
   await newLoanRequest.save();
   if (!newLoanRequest) return sendResponse(res, 400, true, null, "Loan Request Failed");
-let genPassword=123456
+  let genPassword=123456789
     // save email and new password to new schema
   // Send confirmation email
   newLoanRequest.save({email:email,genPassword})
@@ -97,7 +96,7 @@ router.post("/addAppointment", async (req, res) => {
   await newAppointment.save();
   if (!newAppointment) return sendResponse(res, 400, true, null, "Appointment Request Failed");
 
-  // Send appointment confirmation email
+  // Send confirmation email
   const user = await Users.findById(userId);
   if (user) {
     await sendEmail(user.email, "Appointment Confirmation", `Your appointment has been scheduled on ${appointmentDate} at ${appointmentTime}.`);
